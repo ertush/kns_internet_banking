@@ -1,7 +1,7 @@
 
 import "./globals.css";
 import '@radix-ui/themes/styles.css';
-import { Theme, ThemePanel } from '@radix-ui/themes';
+import { Theme, Flex, ThemePanel } from '@radix-ui/themes';
 
 
 export const metadata = {
@@ -14,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Theme accentColor="teal" appearance="dark">
-          {children}
+          <div className="w-full h-screen flex justify-center items-center">
+           {children}
+          </div>
           {/* <ThemePanel /> */}
         </Theme>
       </body>

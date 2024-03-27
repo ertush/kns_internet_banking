@@ -9,7 +9,7 @@ const MAX_WITHDRAWAL_TRANSACTION = 20000
 const MAX_WITHDRAWAL_FREQUENCY = 3
 
 
-export class BankType {
+class Bank {
 
     /**
      * @param {number} balance 
@@ -17,8 +17,10 @@ export class BankType {
 
     constructor(balance) {
         this.balance = balance
-        this.depositAmountDays = [0, 0, 0, 0]
-        this.withdrawalAmountDays = [0, 0, 0]
+        this.depositAmountDays = new Array(MAX_DEPOSIT_FREQUENCY)
+        this.withdrawalAmountDays = new Array(MAX_WITHDRAWAL_FREQUENCY)
+        this.depositFrequency = 1
+        this.withdrawFrequency = 1
         this.error = null
 
     }
@@ -38,18 +40,19 @@ export class BankType {
         if (amount <= MAX_DEPOSIT_TRANSACTION) {
 
             // Check if number of transactions is exceeded per day
-            if (this.depositAmountDays.length < MAX_DEPOSIT_FREQUENCY) {
+            if (this.depositFrequency <= MAX_DEPOSIT_FREQUENCY) {
                 this.depositAmountDays.push(amount)
+
 
                 // Check if deposit for the day is exceeded
                 if (this.depositAmountDays.length > 0 && this.getTotalTransactionAmount(this.depositAmountDays) <= MAX_DEPOSIT_DAY) {
                     this.balance += amount
+                    this.depositFrequency += 1
                 } else {
                     // throw max deposit amount for the day Exeception
                     this.error = "You have exceeded the maximum deposit amount for the day"
 
                 }
-
             } else {
                 // throw max day deposit frequency Exeception
                 this.error = "You have exceeded the maximum number of deposit transaction per day"
@@ -83,23 +86,24 @@ export class BankType {
             if (amount <= MAX_WITHDRAWAL_TRANSACTION) {
 
                 // Check if number of transactions is exceeded per day
-                if (this.withdrawalAmountDays.length < MAX_WITHDRAWAL_FREQUENCY) {
+                if (this.withdrawFrequency <= MAX_WITHDRAWAL_FREQUENCY) {
                     this.withdrawalAmountDays.push(amount)
-
                     // Check if cumilative withdrawal amount for the day is exceeded
-                    if (this.withdrawalAmountDays.length > 0 & this.getTotalTransactionAmount(this.withdrawalAmountDays) <= MAX_WITHDRAWAL_DAY) {
-                        this.balance -= amount
-                    } else {
-                        // throw max deposit amount for the day Exeception
-                        this.error = "You have exceeded the maximum withdrawal amount for the day"
-                    }
+                if (this.withdrawalAmountDays.length > 0 && this.getTotalTransactionAmount(this.withdrawalAmountDays) <= MAX_WITHDRAWAL_DAY) {
+                    this.balance -= amount
+                    this.withdrawFrequency += 1
+                } else {
+                    // throw max deposit amount for the day Exeception
+                    this.error = "You have exceeded the maximum withdrawal amount for the day"
+
+                }
 
                 } else {
                     // throw max day withdrawal frequency Exeception
                     this.error = "You have exceeded the maximum number of withdrawals per day"
                 }
 
-
+                
 
 
             } else {
@@ -135,23 +139,23 @@ export class BankType {
  * @return {Object.<BankType>}
  */
 
-const Bank = (function () {
-    let instance;
+// const Bank = (function () {
+//     let instance;
 
-    function createInstance() {
+//     function createInstance() {
 
-        return new BankType(0)
-    }
+//         return new BankType(0)
+//     }
 
-    return {
-        instance: function () {
-            if (!instance) {
-                instance = createInstance();
-            }
-            return instance;
-        },
-    };
-})();
+//     return {
+//         instance: function () {
+//             if (!instance) {
+//                 instance = createInstance();
+//             }
+//             return instance;
+//         },
+//     };
+// })();
 
 
 export default Bank

@@ -7,13 +7,14 @@ export async function GET(request) {
 
     const amount = searchParams.get('amount')
 
-    const bank = Bank.instance()
+    const kv_balance = await kv.get("x");
 
-    bank.balance = await kv.get("bank");
+    const bank = new Bank(kv_balance)
+
 
     const balance = bank.deposit(Number(amount))
 
-    await kv.set("bank", balance);
+    await kv.set("x", balance);
 
     
     
