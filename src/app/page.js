@@ -6,7 +6,9 @@ import { Container, Flex } from '@radix-ui/themes'
 export default function Home() {
 
 
-  const [balance, setBalance] = useState(null)
+  const [balance, setBalance] = useState(
+    "0"
+  )
   
 
   useEffect(() => {
