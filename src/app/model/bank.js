@@ -9,7 +9,7 @@ const MAX_WITHDRAWAL_TRANSACTION = 20000
 const MAX_WITHDRAWAL_FREQUENCY = 3
 
 
-class Bank {
+class BankType {
 
     /**
      * @param {number} balance 
@@ -139,23 +139,23 @@ class Bank {
  * @return {Object.<BankType>}
  */
 
-// const Bank = (function () {
-//     let instance;
+const Bank = (function () {
+    let instance;
 
-//     function createInstance() {
+    function createInstance() {
 
-//         return new BankType(0)
-//     }
+        return new BankType(0)
+    }
 
-//     return {
-//         instance: function () {
-//             if (!instance) {
-//                 instance = createInstance();
-//             }
-//             return instance;
-//         },
-//     };
-// })();
+    return {
+        instance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        },
+    };
+})();
 
 
 export default Bank
