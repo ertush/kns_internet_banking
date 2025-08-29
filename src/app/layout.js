@@ -1,8 +1,6 @@
-
 import "./globals.css";
-import '@radix-ui/themes/styles.css';
-import { Theme, Flex, ThemePanel } from '@radix-ui/themes';
-
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 
 export const metadata = {
   title: "kns ibanking",
@@ -15,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <Theme accentColor="teal" appearance="dark">
           <div className="w-full h-screen flex justify-center items-center">
-           {children}
+            {children}
           </div>
           {/* <ThemePanel /> */}
         </Theme>
