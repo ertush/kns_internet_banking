@@ -15,6 +15,7 @@ import {
 import {
   InformationCircleIcon,
   ExclamationTriangleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Home() {
@@ -24,11 +25,12 @@ export default function Home() {
   const [withdrawSubmitting, setWithdrawSubmitting] = useState(false);
   const [checkbalanceSubmitting, setCheckbalanceSubmitting] = useState(false);
   const [resetSubmitting, setResetSubmitting] = useState(false);
+  const [checkBalanceSubmit, setCheckBalanceSubmit] = useState(false);
 
   useEffect(() => {
     async function getBalance() {
       try {
-        return await fetch("/api/deposit?amount=0");
+        return await fetch("/api/balance");
       } catch (e) {
         console.error("Error :", e.message);
       }
@@ -105,6 +107,22 @@ export default function Home() {
           setResetSubmitting(false);
         }
         break;
+
+      case "check_balance":
+        setCheckBalanceSubmit(true);
+
+        fetch(`/api/balance`)
+          .then((resp) => resp.json())
+          .then((cBalance) => {
+            setBalance(cBalance?.balance);
+            setError(cBalance?.exception);
+          })
+          .catch((e) => console.error(e.message))
+          .finally(() => {
+            setCheckBalanceSubmit(false);
+          });
+
+        break;
     }
   }
 
@@ -112,9 +130,13 @@ export default function Home() {
     <>
       {error !== null && typeof error == "string" && error !== "" && (
         <Flex justify="center" className="h-auto absolute top-[10%] inset-x-0">
-          <Callout.Root color="gold">
+          <Callout.Root color={error.includes("balance") ? "green" : "gold"}>
             <Callout.Icon>
-              <ExclamationTriangleIcon className="w-6 aspect-square" />
+              {error.includes("balance") ? (
+                <CheckCircleIcon className="w-6 aspect-square" />
+              ) : (
+                <ExclamationTriangleIcon className="w-6 aspect-square" />
+              )}
             </Callout.Icon>
             <Callout.Text>{error}</Callout.Text>
           </Callout.Root>
@@ -228,6 +250,17 @@ export default function Home() {
                   className="cursor-pointer"
                 >
                   Withdraw
+                </Button>
+                <Button
+                  loading={checkbalanceSubmitting}
+                  disabled={checkbalanceSubmitting}
+                  name="check_balance"
+                  type="submit"
+                  size="3"
+                  variant="soft"
+                  className="cursor-pointer"
+                >
+                  Check Balance
                 </Button>
                 <Button
                   loading={checkbalanceSubmitting}
