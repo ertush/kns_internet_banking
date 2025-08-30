@@ -51,6 +51,8 @@ export default function Home() {
 
     const formData = Object.fromEntries(formDataEntries);
 
+    ev.currentTarget.reset();
+
     switch (window.event.submitter.name) {
       case "deposit":
         setDepositSubmitting(true);
