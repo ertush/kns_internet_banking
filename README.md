@@ -37,7 +37,7 @@ Returns current balance and detailed transaction summary with limits.
 }
 ```
 
-### GET /api/deposit
+### POST /api/deposit
 Deposits money into the account.
 
 **Request Body:**
@@ -55,7 +55,7 @@ Deposits money into the account.
 }
 ```
 
-### GET /api/withdraw
+### POST /api/withdraw
 Withdraws money from the account.
 
 **Request Body:**

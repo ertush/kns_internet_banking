@@ -13,11 +13,3 @@ export async function POST(request) {
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-
-// Keep GET for backward compatibility but mark as deprecated
-export async function GET(request) {
-  return Response.json(
-    { error: "Please use POST method for reset" },
-    { status: 405 },
-  );
-}
