@@ -80,18 +80,30 @@ export default function Home() {
         break;
 
       case "reset_account":
-        setCheckbalanceSubmitting(true);
+        setResetSubmitting(true);
+        setError(null);
 
-        fetch("/api/reset")
-          .then((resp) => resp.json())
-          .then((balance) => {
-            setBalance(balance?.balance);
-            setError(balance?.exception);
-          })
-          .catch((e) => console.error(e.message))
-          .finally(() => {
-            setCheckbalanceSubmitting(false);
+        try {
+          const response = await fetch("/api/reset", {
+            method: "POST",
           });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            setBalance(data.balance);
+            // setTransactionSummary(data);
+            setError(null);
+          } else {
+            setError(data.error);
+          }
+        } catch (e) {
+          console.error(e.message);
+          setError("Failed to reset account");
+        } finally {
+          setResetSubmitting(false);
+        }
+        break;
     }
   }
 
