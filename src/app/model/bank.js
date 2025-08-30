@@ -113,13 +113,17 @@ class BankType {
    * Reset daily counters (to be called once a day if needed)
    */
   resetBank() {
-    const balance = 0;
-    this.balance = balance;
+    this.balance = 0;
     this.deposits = [];
     this.withdrawals = [];
     this.error = null;
+    this.lastResetDate = new Date().toDateString();
 
-    return this.balance;
+    return {
+      success: true,
+      balance: this.balance,
+      error: null,
+    };
   }
 }
 
