@@ -23,6 +23,7 @@ export default function Home() {
   const [depositSubmitting, setDepositSubmitting] = useState(false);
   const [withdrawSubmitting, setWithdrawSubmitting] = useState(false);
   const [checkbalanceSubmitting, setCheckbalanceSubmitting] = useState(false);
+  const [resetSubmitting, setResetSubmitting] = useState(false);
 
   useEffect(() => {
     async function getBalance() {
