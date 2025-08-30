@@ -79,10 +79,10 @@ export default function Home() {
 
         break;
 
-      case "check_balance":
+      case "reset_account":
         setCheckbalanceSubmitting(true);
 
-        fetch("/api/deposit?amount=0")
+        fetch("/api/reset")
           .then((resp) => resp.json())
           .then((balance) => {
             setBalance(balance?.balance);
@@ -219,13 +219,13 @@ export default function Home() {
                 <Button
                   loading={checkbalanceSubmitting}
                   disabled={checkbalanceSubmitting}
-                  name="check_balance"
+                  name="reset_account"
                   type="submit"
                   size="3"
                   variant="soft"
                   className="cursor-pointer"
                 >
-                  Check Balance
+                  Reset Account
                 </Button>
               </Flex>
             </Flex>
