@@ -56,7 +56,41 @@ export default function Home() {
       case "deposit":
         setDepositSubmitting(true);
 
-        fetch(`/api/deposit?amount=${formData?.amount}`)
+        /**
+         *
+         try {
+           const response = await fetch("/api/deposit", {
+             method: "POST",
+             headers: {
+               "Content-Type": "application/json",
+             },
+             body: JSON.stringify({ amount: Number(formData?.amount) }),
+           });
+
+           const data = await response.json();
+
+           if (response.ok) {
+             setBalance(data.balance);
+             // setTransactionSummary(data);
+             setError(null);
+           } else {
+             setError(data.error);
+           }
+         } catch (e) {
+           console.error(e.message);
+           setError("Failed to process deposit");
+         } finally {
+           setDepositSubmitting(false);
+         }
+         */
+
+        fetch("/api/deposit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: Number(formData?.amount) }),
+        })
           .then((resp) => resp.json())
           .then((dBalance) => {
             setBalance(dBalance?.balance);
