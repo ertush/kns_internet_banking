@@ -73,7 +73,7 @@ class BankType {
     const transactions = type === "DEPOSIT" ? this.deposits : this.withdrawals;
 
     // check amount
-    if (amount <= 0) {
+    if (amount <= 0 || isNaN(amount)) {
       this.error = `Invalid ${type.toLowerCase()} amount`;
       return false;
     }
