@@ -241,11 +241,7 @@ export default function Home() {
             <Text weight="medium" size="4">
               Transact
             </Text>
-            <Flex
-              gap="2"
-              wrap="wrap"
-              className="md:flex-row md:flex grid grid-cols-1"
-            >
+            <Flex gap="2" wrap="wrap" className="md:flex-row md:flex">
               <Button
                 loading={depositSubmitting}
                 disabled={depositSubmitting}
