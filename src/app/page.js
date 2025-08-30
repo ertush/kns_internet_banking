@@ -129,31 +129,10 @@ export default function Home() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 h-full">
-      {error !== null && typeof error === "string" && error !== "" && (
-        <Flex
-          justify="center"
-          className={`h-auto md:h-min absolute md:top-[10%] md:bottom-0 ${error ? "bottom-[12%]" : ""} inset-x-0 md:z-0 z-10 md:mx-0 mx-7`}
-        >
-          <Callout.Root
-            color={error.includes("balance") ? "green" : "gold"}
-            className="backdrop-blur-md"
-          >
-            <Callout.Icon>
-              {error.includes("balance") ? (
-                <CheckCircleIcon className="w-6 aspect-square" />
-              ) : (
-                <ExclamationTriangleIcon className="w-6 aspect-square" />
-              )}
-            </Callout.Icon>
-            <Callout.Text>{error}</Callout.Text>
-          </Callout.Root>
-        </Flex>
-      )}
-
       <Card className="w-full md:mt-56">
         {/* Header */}
         <Flex direction="column" className="text-center">
-          <Text className="text-2xl font-semibold">Kns Bank App</Text>
+          <Text className="text-2xl font-semibold">KNS Bank App</Text>
         </Flex>
 
         {/* User Info + Balance */}
@@ -219,15 +198,33 @@ export default function Home() {
 
         <Separator orientation="horizontal" size="4" my="5" />
 
+        {error !== null && typeof error === "string" && error !== "" && (
+          <Flex
+            justify="center"
+            className={`h-auto flex md:hidden md:h-min mx-7`}
+          >
+            <Callout.Root
+              color={error.includes("balance") ? "green" : "gold"}
+              className="backdrop-blur-md"
+            >
+              <Callout.Icon>
+                {error.includes("balance") ? (
+                  <CheckCircleIcon className="w-6 aspect-square" />
+                ) : (
+                  <ExclamationTriangleIcon className="w-6 aspect-square" />
+                )}
+              </Callout.Icon>
+              <Callout.Text>{error}</Callout.Text>
+            </Callout.Root>
+          </Flex>
+        )}
+
         {/* Transaction Form */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row gap-8 w-full"
+          className="flex flex-col md:flex-row gap-8 mt-5 w-full"
         >
-          <Flex
-            direction="column"
-            className={`gap-y-2 w-full md:w-1/2 ${error ? "mt-12 md:mt-0" : ""}`}
-          >
+          <Flex direction="column" className="gap-y-2 w-full md:w-1/2">
             <Text weight="medium" size="4">
               Amount
             </Text>
