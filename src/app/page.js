@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import {
   Card,
+  Box,
   Flex,
   Text,
   Avatar,
@@ -127,10 +128,16 @@ export default function Home() {
   }
 
   return (
-    <>
-      {error !== null && typeof error == "string" && error !== "" && (
-        <Flex justify="center" className="h-auto absolute top-[10%] inset-x-0">
-          <Callout.Root color={error.includes("balance") ? "green" : "gold"}>
+    <div className="max-w-3xl mx-auto px-4 py-6 h-full">
+      {error !== null && typeof error === "string" && error !== "" && (
+        <Flex
+          justify="center"
+          className={`h-auto md:h-min absolute md:top-[10%] md:bottom-0 ${error ? "bottom-[12%]" : ""} inset-x-0 md:z-0 z-10 md:mx-0 mx-7`}
+        >
+          <Callout.Root
+            color={error.includes("balance") ? "green" : "gold"}
+            className="backdrop-blur-md"
+          >
             <Callout.Icon>
               {error.includes("balance") ? (
                 <CheckCircleIcon className="w-6 aspect-square" />
@@ -143,39 +150,41 @@ export default function Home() {
         </Flex>
       )}
 
-      <Card size={6} p="12" className="w-2/5 h-auto gap-y-4 flex flex-col">
-        <Flex direction={"column"} className="max-h-min text-center">
+      <Card className="w-full md:mt-56">
+        {/* Header */}
+        <Flex direction="column" className="text-center">
           <Text className="text-2xl font-semibold">Kns Bank App</Text>
         </Flex>
-        {/* <Text className='text-xl font-semibold'>Customer Details</Text> */}
+
+        {/* User Info + Balance */}
         <Flex
-          direction={"row"}
-          mt="5"
-          align="end"
           justify="between"
-          className="max-h-min text-start"
+          className="flex-col md:flex-row md:justify-between mt-5 items-start text-start gap-4 w-full"
         >
-          <Flex gapX="3">
-            <Avatar size="4" fallback="U"></Avatar>
-            <Flex direction={"column"}>
+          <Flex gap="3" className="items-center">
+            <Avatar size="4" fallback="U" />
+            <Flex direction="column">
               <Text className="text-lg font-semibold">User</Text>
               <Text className="text-base">user@mail.com</Text>
             </Flex>
           </Flex>
 
-          <Flex direction="column" align="start" className="max-w-min">
-            <Flex gapX="5" justify="end">
+          <Flex direction="column" className="w-full md:w-auto" align="start">
+            <Flex justify="between" className="gap-6 w-full md:w-auto flex">
               <Text weight="light">Account:</Text>
               <Badge color="jade" variant="soft" radius="full">
                 Active
               </Badge>
             </Flex>
-
-            <Flex direction="row" gapX="3">
+            <Flex direction="row" gap="3" className="w-full md:w-auto">
               <Text size="5" weight="medium">
                 Balance:
               </Text>
-              <Text mr="3" size="4" weight="bold">
+              <Text
+                className="md:mr-3 text-end w-full md:w-auto"
+                size="4"
+                weight="bold"
+              >
                 Ksh
               </Text>
               <Text size="4" weight="bold">
@@ -185,7 +194,8 @@ export default function Home() {
           </Flex>
         </Flex>
 
-        <Flex mt="6" direction="row" gapX="4" className="w-full">
+        {/* Limits */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 w-full">
           <Callout.Root size="3" className="w-full" variant="surface">
             <Callout.Icon>
               <InformationCircleIcon className="w-6 aspect-square" />
@@ -205,79 +215,84 @@ export default function Home() {
             <Callout.Text>Max frequency: 3 transactions/day</Callout.Text>
             <Callout.Text>Max for the day: Kes. 50K</Callout.Text>
           </Callout.Root>
-        </Flex>
+        </div>
 
         <Separator orientation="horizontal" size="4" my="5" />
 
-        <form onSubmit={handleSubmit}>
-          <Flex justify="between" align="end">
-            <Flex direction="column" className="gap-y-2">
-              <Text weight="medium" size="4">
-                Amount
-              </Text>
-              <TextField.Root
-                name="amount"
-                variant="surface"
-                size="3"
-                className="w-full"
-                placeholder="Enter Amount to Transact"
-              />
-            </Flex>
+        {/* Transaction Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col md:flex-row gap-8 w-full"
+        >
+          <Flex
+            direction="column"
+            className={`gap-y-2 w-full md:w-1/2 ${error ? "mt-12 md:mt-0" : ""}`}
+          >
+            <Text weight="medium" size="4">
+              Amount
+            </Text>
+            <TextField.Root
+              name="amount"
+              variant="surface"
+              size="3"
+              className="w-full"
+              placeholder="Enter Amount to Transact"
+            />
+          </Flex>
 
-            <Flex direction="column" className="gap-y-2">
-              <Text weight="medium" size="4">
-                Transact
-              </Text>
-              <Flex gapX="2">
-                <Button
-                  loading={depositSubmitting}
-                  disabled={depositSubmitting}
-                  name="deposit"
-                  type="submit"
-                  size="3"
-                  variant="soft"
-                  className="cursor-pointer"
-                >
-                  Deposit
-                </Button>
-                <Button
-                  loading={withdrawSubmitting}
-                  disabled={withdrawSubmitting}
-                  name="withdraw"
-                  type="submit"
-                  size="3"
-                  variant="soft"
-                  className="cursor-pointer"
-                >
-                  Withdraw
-                </Button>
-                <Button
-                  loading={checkbalanceSubmitting}
-                  disabled={checkbalanceSubmitting}
-                  name="check_balance"
-                  type="submit"
-                  size="3"
-                  variant="soft"
-                  className="cursor-pointer"
-                >
-                  Check Balance
-                </Button>
-                <Button
-                  loading={checkbalanceSubmitting}
-                  disabled={checkbalanceSubmitting}
-                  name="reset_account"
-                  type="submit"
-                  size="3"
-                  variant="soft"
-                  className="cursor-pointer"
-                >
-                  Reset Account
-                </Button>
-              </Flex>
+          <Flex direction="column" className="gap-y-2 w-full md:w-1/2">
+            <Text weight="medium" size="4">
+              Transact
+            </Text>
+            <Flex
+              gap="2"
+              wrap="wrap"
+              className="md:flex-row md:flex grid grid-cols-1"
+            >
+              <Button
+                loading={depositSubmitting}
+                disabled={depositSubmitting}
+                name="deposit"
+                type="submit"
+                size="3"
+                variant="soft"
+              >
+                Deposit
+              </Button>
+              <Button
+                loading={withdrawSubmitting}
+                disabled={withdrawSubmitting}
+                name="withdraw"
+                type="submit"
+                size="3"
+                variant="soft"
+              >
+                Withdraw
+              </Button>
+              <Button
+                loading={checkbalanceSubmitting}
+                disabled={checkbalanceSubmitting}
+                name="check_balance"
+                type="submit"
+                size="3"
+                variant="soft"
+              >
+                Check Balance
+              </Button>
+              <Button
+                loading={resetSubmitting}
+                disabled={resetSubmitting}
+                name="reset_account"
+                type="submit"
+                size="3"
+                variant="soft"
+              >
+                Reset Account
+              </Button>
             </Flex>
           </Flex>
         </form>
       </Card>
-    </>
+    </div>
   );
 }
