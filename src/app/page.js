@@ -164,7 +164,7 @@ export default function Home() {
           <Flex direction="column" className="w-full md:w-auto" align="start">
             <Flex justify="between" className="gap-6 w-full md:w-auto flex">
               <Text weight="light">Account:</Text>
-              <Badge color="jade" variant="soft" radius="full">
+              <Badge color="jade" variant="outline" radius="full">
                 Active
               </Badge>
             </Flex>
@@ -261,7 +261,7 @@ export default function Home() {
                 name="deposit"
                 type="submit"
                 size="3"
-                variant="soft"
+                variant="outline"
               >
                 Deposit
               </Button>
@@ -271,7 +271,7 @@ export default function Home() {
                 name="withdraw"
                 type="submit"
                 size="3"
-                variant="soft"
+                variant="outline"
               >
                 Withdraw
               </Button>
@@ -281,7 +281,7 @@ export default function Home() {
                 name="check_balance"
                 type="submit"
                 size="3"
-                variant="soft"
+                variant="outline"
               >
                 Check Balance
               </Button>
@@ -291,7 +291,7 @@ export default function Home() {
                 name="reset_account"
                 type="submit"
                 size="3"
-                variant="soft"
+                variant="outline"
               >
                 Reset Account
               </Button>
